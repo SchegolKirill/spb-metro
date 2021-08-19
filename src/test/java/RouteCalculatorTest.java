@@ -5,11 +5,15 @@ import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class RouteCalculatorTest extends TestCase {
     RouteCalculator calculator;
     List<Station> route;
     StationIndex stationIndex;
+    TreeMap<Station, TreeSet<Station>> myCustomConnections;
+    TreeSet<Station> stations;
 
     @Override
     protected void setUp() throws Exception {
@@ -24,21 +28,47 @@ public class RouteCalculatorTest extends TestCase {
         stationIndex.addLine(line2);
         stationIndex.addLine(line3);
 
-        stationIndex.addStation(new Station("Петровская", line1));
-        stationIndex.addStation(new Station("Арбузная", line1));
-        stationIndex.addStation(new Station("Морковная", line2));
-        stationIndex.addStation(new Station("Яблочная", line2));
-        stationIndex.addStation(new Station("Колхозная", line3));
-        stationIndex.addStation(new Station("Черниговская", line3));
+        Station st1 = new Station("Петровская", line1);
+        Station st2 = new Station("Арбузная", line1);
+        Station st3 = new Station("Морковная", line2);
+        Station st4 = new Station("Яблочная", line2);
+        Station st5 = new Station("Колхозная", line3);
+        Station st6 = new Station("Черниговская", line3);
 
-        stationIndex.addConnection(line1.getStations());
+        line1.addStation(st1);
+        line1.addStation(st2);
+        line2.addStation(st3);
+        line2.addStation(st4);
+        line3.addStation(st5);
+        line3.addStation(st6);
 
-        route.add(stationIndex.getStation("Петровская"));
-        route.add(stationIndex.getStation("Арбузная"));
-        route.add(stationIndex.getStation("Морковная"));
-        route.add(stationIndex.getStation("Яблочная"));
-        route.add(stationIndex.getStation("Колхозная"));
-        route.add(stationIndex.getStation("Черниговская"));
+        stationIndex.addStation(st1);
+        stationIndex.addStation(st2);
+        stationIndex.addStation(st3);
+        stationIndex.addStation(st4);
+        stationIndex.addStation(st5);
+        stationIndex.addStation(st6);
+
+        stationIndex.addLine(line1);
+        stationIndex.addLine(line2);
+        stationIndex.addLine(line3);
+
+        myCustomConnections = new TreeMap<>();
+        TreeSet<Station> p1 = new TreeSet<>();
+        p1.add(st3);
+        myCustomConnections.put(st2,p1);
+        TreeSet<Station> p2 = new TreeSet<>();
+        p1.add(st5);
+        myCustomConnections.put(st4,p2);
+
+        stationIndex.connections.putAll(myCustomConnections);
+
+        route.add(st1);
+        route.add(st2);
+        route.add(st3);
+        route.add(st4);
+        route.add(st5);
+        route.add(st6);
     }
 
     public void testCalculateDuration(){
