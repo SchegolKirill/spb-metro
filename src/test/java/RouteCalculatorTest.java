@@ -58,8 +58,14 @@ public class RouteCalculatorTest extends TestCase {
         p1.add(st3);
         myCustomConnections.put(st2,p1);
         TreeSet<Station> p2 = new TreeSet<>();
-        p1.add(st5);
+        p2.add(st5);
         myCustomConnections.put(st4,p2);
+        TreeSet<Station> p3 = new TreeSet<>();
+        p3.add(st2);
+        myCustomConnections.put(st3,p3);
+        TreeSet<Station> p4 = new TreeSet<>();
+        p4.add(st4);
+        myCustomConnections.put(st5,p4);
 
         stationIndex.connections.putAll(myCustomConnections);
 
@@ -69,6 +75,12 @@ public class RouteCalculatorTest extends TestCase {
         route.add(st4);
         route.add(st5);
         route.add(st6);
+//        route.add(st6);
+//        route.add(st5);
+//        route.add(st4);
+//        route.add(st3);
+//        route.add(st2);
+//        route.add(st1);
     }
 
     public void testCalculateDuration(){
